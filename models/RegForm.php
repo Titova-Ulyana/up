@@ -37,10 +37,18 @@ class RegForm extends \app\models\User
     public function rules()
     {
         return [
-            [['name', 'surname', 'email', 'login', 'password', 'token'], 'required'],
-            [['is_admin'], 'integer'],
+            [['name', 'surname', 'email', 'login', 'password', 'confirm_password', 'agree'], 'required'],
             [['name', 'surname', 'patronymic', 'email', 'login'], 'string', 'max' => 100],
-            [['password', 'token'], 'string', 'max' => 200],
+            [['password', 'confirm_password'], 'string', 'max' => 200],
+            [['name', 'surname', 'patronymic'], 'match', 'pattern'=> '/^[А-Яа-яЁё-]{2,}$/', 'message' => 'Используйте минимум 2 русские буквы'],
+            [['email'], 'unique'],
+            [['email'], 'email'],
+            [['login'], 'unique'],
+            [['password'], 'match', 'pattern'=>'/^[A-Za-z0-9]{6,}$/', 'message'=>'Используйте минимум 6 латинских букв и цифр'],
+            [['confirm_password'], 'compare', 'compareAttribute'=>'password'],
+            [['login'], 'match', 'pattern'=>'/^[A-Za-z0-9_]{6,}$/', 'message'=>'Используйте минимум 6 латинских букв и цифр'],
+            [['agree'], 'compare', 'compareValue'=>true, 'message'=>''],
+
         ];
     }
 

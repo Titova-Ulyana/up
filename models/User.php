@@ -28,20 +28,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     
      public static function findIdentity($id)
      {
-       // return static::findOne($id);
-       return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+       return static::findOne($id);
+       //return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
      }
     
      public static function findIdentityByAccessToken($token, $type = null)
      {
-        //return static::findOne(['access_token' => $token]);
-         foreach (self::$users as $user) {
+        return static::findOne(['access_token' => $token]);
+         /*foreach (self::$users as $user) {
              if ($user['accessToken'] === $token) {
                  return new static($user);
              }
          }
  
-         return null;
+         return null;*/
      }
 
      public function getId()
@@ -54,7 +54,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return; 
     }
 
     /**
@@ -62,7 +62,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return; 
     }
 
     public function validatePassword($password)
@@ -70,10 +70,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->password === $password;
     }
 
-    /*public static function findByEmail($email)
+    public static function findByLogin($login)
     {
-        return self::find()->where(['email'=> $email])->one();
-    }*/
+        return self::find()->where(['login'=> $login])->one();
+    }
 
 
      public static function tableName()

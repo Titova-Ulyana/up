@@ -4,8 +4,8 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
+
+
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
@@ -31,29 +31,51 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 <header id="header">
     <?php
-    NavBar::begin([
+        if (Yii::$app->user->isGuest) {
+        $items = [
+            ['label' => 'Каталог', 'url' => ['/product/catalog']],
+            ['label' => 'О нас', 'url' => ['/site/about']],
+            ['label' => 'Где нас найти', 'url' => ['/site/contact']],
+            ['label' => 'Регистрация', 'url' => ['/user/create']],
+            ['label' => 'Авторизация', 'url' => ['/site/login']],
+            
+        ]; }
+        else {
+            Yii::$app->user->identity->is_admin==1 ?
+            (
+                $items=[
+                ['label' => 'Панель администратора', 'url' => ['/admin/index']],
+                ]
+            ) :
+            (
+                $items=[
+                ['label' => 'Каталог', 'url' => ['/product/catalog']],
+                ['label' => 'О нас', 'url' => ['/site/about']],
+                ['label' => 'Где нас найти', 'url' => ['/site/contact']],
+                ['label' => 'Корзина', 'url' => ['/cart/index']],
+                ['label' => 'Заказы', 'url' => ['/order/index']],
+                ]
+            );
+
+                array_push($items, '<li class="nav-item">'. Html::beginForm(['/site/logout']) . Html::submitButton (
+                    'Выйти (' . Yii::$app->user->identity->login . ')',
+                    ['class' => 'nav-link btn btn-link logout']
+                    
+                    
+                )
+                . Html::endForm()
+                . '</li>');
+                //$this->redirect(['/about']);
+            }
+
+        NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Регистрация', 'url' => ['/user/create']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'items' => $items
     ]);
     NavBar::end();
     ?>
@@ -61,10 +83,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </main>

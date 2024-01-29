@@ -14,7 +14,6 @@ use Yii;
  * @property string $email
  * @property string $login
  * @property string $password
- * @property string $token
  * @property int $is_admin
  *
  * @property Orders[] $orders0
@@ -40,7 +39,7 @@ class RegForm extends \app\models\User
             [['name', 'surname', 'email', 'login', 'password', 'confirm_password', 'agree'], 'required'],
             [['name', 'surname', 'patronymic', 'email', 'login'], 'string', 'max' => 100],
             [['password', 'confirm_password'], 'string', 'max' => 200],
-            [['name', 'surname', 'patronymic'], 'match', 'pattern'=> '/^[А-Яа-яЁё-]{2,}$/', 'message' => 'Используйте минимум 2 русские буквы'],
+            [['name', 'surname', 'patronymic'], 'match', 'pattern'=> '/^[А-Яа-яЁё-]{2,}$/u', 'message' => 'Используйте минимум 2 русские буквы'],
             [['email'], 'unique'],
             [['email'], 'email'],
             [['login'], 'unique'],
@@ -65,7 +64,6 @@ class RegForm extends \app\models\User
             'email' => 'Почта',
             'login' => 'Логин',
             'password' => 'Пароль',
-            'token' => 'Token',
             'is_admin' => 'Is Admin',
             'confirm_password' => 'Повторите пароль',
             'agree' => 'Подтвердите согласие на обработку персональных данных',

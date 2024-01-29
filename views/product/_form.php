@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <? $li=[]; $categories=\app\models\Category::find()->all();
  foreach ($categories as $category)
 { 
-$li[$category->id]=$category->name; 
+$li[$category->id]=$category->name_category; 
 }
 ?>
 
@@ -23,7 +23,7 @@ $li[$category->id]=$category->name;
 
     <?= $form->field($model, 'name_product')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'photo')->fileInput() ?>
 
     <?= $form->field($model, 'count')->textInput() ?>
 

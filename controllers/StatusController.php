@@ -1,18 +1,17 @@
 <?php
 
 namespace app\controllers;
-use app\models\Product;
-use app\models\ProductSearch;
-//use GuzzleHttp\Psr7\UploadedFile;
+
+use app\models\Status;
+use app\models\StatusSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * StatusController implements the CRUD actions for Status model.
  */
-class ProductController extends Controller
+class StatusController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all Product models.
+     * Lists all Status models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new StatusSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,19 +47,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionCatalog()
-    {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('catalog', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
     /**
-     * Displays a single Product model.
+     * Displays a single Status model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -73,13 +61,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Status model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Status();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -95,7 +83,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Status model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -105,14 +93,7 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost) {
-        $model->load($this->request->post());
-        $model->photo=UploadedFile::getInstance($model,'photo');
-        $file_name='/assets/img/'.\Yii::$app->getSecurity()->generateRandomString(50). '.' . $model->photo->extension;
-        $model->photo->saveAs(\Yii::$app->basePath . $file_name);
-        $model->photo=$file_name;
-
-            $model->save(false);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -122,7 +103,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Status model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -136,15 +117,15 @@ class ProductController extends Controller
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Status model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Product the loaded model
+     * @return Status the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        if (($model = Status::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

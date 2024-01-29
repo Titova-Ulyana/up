@@ -43,19 +43,20 @@ $this->title = $model->name_product;
         <p class="card-text"><b>Характеристики:</b></p>
         <p class="card-text">Цвет: <?echo $model->color?></p>
         <p class="card-text">Страна-производитель: <?echo $model->country?></p>
-       <? 
-       $id=$model->id;
-       $product = Product::find($id)->one();
-       echo $product;
-        //$category=new Category($product->getCategory()->one());?>
-        <p class="card-text">Вид товара: <?echo $id?></p>
+        <?$category=Category::findOne($model->category_id);?>
+        <p class="card-text">Вид товара: <?echo $category->name_category?></p>
       </div>
     </div>
   </div>
 </div>
 
 
+<?
+if(Yii::$app->user->isGuest){}
+else echo "<p onclick='add_product({$model->id})' class='btn btn-primary'>Добавить в корзину</p>";
+ ?>
 
+<script src=../js/script.js></script>
 
     <?/*= DetailView::widget([
         'model' => $model,

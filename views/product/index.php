@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\ProductSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Products';
+$this->title = 'Товары';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,14 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
+            //'category_id',
+            ['attribute'=>'Категория', 'value'=>function($data){return $data->getCategory()->One()->name_category;}],
             'name_product',
-            'photo',
+            ['attribute'=>'Фото', 'format'=>'html', 'value'=>function($data){return "<img src='../../..{$data->photo}' alt='photo' style='width:70px;'>";}],
+            //'photo',
             'count',
             'price',
-            //'country',
-            //'color',
-            //'category_id',
+            'country',
+            'color',
+            
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Product $model, $key, $index, $column) {

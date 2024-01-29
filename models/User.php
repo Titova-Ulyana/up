@@ -34,8 +34,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     
      public static function findIdentityByAccessToken($token, $type = null)
      {
-        return static::findOne(['access_token' => $token]);
-         /*foreach (self::$users as $user) {
+        /*return static::findOne(['access_token' => $token]);
+         foreach (self::$users as $user) {
              if ($user['accessToken'] === $token) {
                  return new static($user);
              }
@@ -87,10 +87,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['name', 'surname', 'email', 'login', 'password', 'token'], 'required'],
+            [['name', 'surname', 'email', 'login', 'password'], 'required'],
             [['is_admin'], 'integer'],
             [['name', 'surname', 'patronymic', 'email', 'login'], 'string', 'max' => 100],
-            [['password', 'token'], 'string', 'max' => 200],
+            [['password'], 'string', 'max' => 200],
         ];
     }
 
@@ -107,7 +107,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'email' => 'Почта',
             'login' => 'Логин',
             'password' => 'Пароль',
-            'token' => 'Token',
+            //'token' => 'Token',
             'is_admin' => 'Is Admin',
         ];
     }

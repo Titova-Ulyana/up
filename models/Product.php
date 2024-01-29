@@ -39,7 +39,7 @@ class Product extends \yii\db\ActiveRecord
             [['count', 'category_id'], 'integer'],
             [['price'], 'number'],
             [['name_product'], 'string', 'max' => 100],
-            [['photo'], 'string', 'max' => 200],
+            [['photo'], 'file', 'extensions' => ['png', 'jpg', 'gif', 'jpeg'],'skipOnEmpty' => false ],
             [['country', 'color'], 'string', 'max' => 50],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -52,12 +52,12 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name_product' => 'Name Product',
+            'name_product' => 'Название',
             'photo' => 'Photo',
-            'count' => 'Count',
-            'price' => 'Price',
-            'country' => 'Country',
-            'color' => 'Color',
+            'count' => 'Количество',
+            'price' => 'Цена',
+            'country' => 'Страна-Производитель',
+            'color' => 'Цвет',
             'category_id' => 'Category ID',
         ];
     }

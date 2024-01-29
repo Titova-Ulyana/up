@@ -30,7 +30,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php $this->beginBody() ?>
 
 <header id="header">
+
     <?php
+
         if (Yii::$app->user->isGuest) {
         $items = [
             ['label' => 'Каталог', 'url' => ['/product/catalog']],
@@ -53,7 +55,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 ['label' => 'О нас', 'url' => ['/site/about']],
                 ['label' => 'Где нас найти', 'url' => ['/site/contact']],
                 ['label' => 'Корзина', 'url' => ['/cart/index']],
-                ['label' => 'Заказы', 'url' => ['/order/index']],
+                ['label' => 'Заказы', 'url' => ['/orders/order']],
                 ]
             );
 
@@ -69,9 +71,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             }
 
         NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Html::img('../../assets/img/rose1_white.jpg',['alt'=>Yii::$app->name, 'width' => '40px', 'height' => '40px']),
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top "height="40px" width="40px"']
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
@@ -94,6 +96,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" arialabelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src=../js/script.js></script>
+
+
+
 </footer>
 
 <?php $this->endBody() ?>

@@ -31,8 +31,6 @@ use yii\widgets\Pjax;
 
     <?= $form->field($model, 'agree')->checkbox() ?>
 
-    <?//= $form->field($model, 'token')->textInput(['maxlength' => true]) ?>
-
     <?//= $form->field($model, 'is_admin')->textInput() ?>
 
     <div class="form-group">

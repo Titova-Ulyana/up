@@ -20,11 +20,11 @@ $items=[];
 
 foreach($articles as $article)
 {
-    $items[]="<div class='bg-dark m-2 p-2 d-flex flex-column justify-content-center'>
+    $items[]="<div class='fon m-2 p-2 d-flex flex-column justify-content-center'>
     <h1 class='text-primary text-center m-2'>{$article->name_product}</h1>
     <img class='m-auto w-25' src='../../..{$article->photo}' alt='photo' /></div>";
 }
-
+echo "";
  echo Carousel::widget([
      'items' => $items
  ]);

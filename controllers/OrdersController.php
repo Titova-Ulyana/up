@@ -1,18 +1,18 @@
 <?php
 
 namespace app\controllers;
-use app\models\Product;
-use app\models\ProductSearch;
-//use GuzzleHttp\Psr7\UploadedFile;
+
+use app\models\Cart;
+use app\models\Orders;
+use app\models\OrdersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-
+use Yii;
 /**
- * ProductController implements the CRUD actions for Product model.
+ * OrdersController implements the CRUD actions for Orders model.
  */
-class ProductController extends Controller
+class OrdersController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,35 +32,41 @@ class ProductController extends Controller
         );
     }
 
+    public function beforeAction($action)
+    { 
+        if (Yii::$app->user->isGuest){ 
+        $this->redirect(['site/login']); return false; 
+        } else return true; 
+
+    }
     /**
-     * Lists all Product models.
+     * Lists all Orders models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
+
         ]);
     }
-
-    public function actionCatalog()
+    public function actionOrder()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('catalog', [
+        return $this->render('page_order', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-
     /**
-     * Displays a single Product model.
+     * Displays a single Orders model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -73,13 +79,36 @@ class ProductController extends Controller
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Orders model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $pass=Yii::$app->request->post('password');
+        $user_pass = Yii::$app->user->identity->password;
+        if ($user_pass == $pass)
+        {
+            $user_id = Yii::$app->user->identity->id;
+            $date_n=date('Y-m-d H:i:s');
+                $order = new Orders();
+                $order->timestamp = $date_n;
+                $order->user_id = $user_id;
+                $order->status_order = 1;
+                $order->save(false);
+
+            $carts = Cart::find()->where(['user_id' => $user_id])->andWhere(['orders_id' => null])->all();
+
+            foreach($carts as $cart){
+                $cart->orders_id = $order->id;
+                $cart->update(false);
+            }
+
+        }else 
+        {
+            return 'false';
+        }
+        /*$model = new Orders();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -91,11 +120,11 @@ class ProductController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-        ]);
+        ]);*/
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Orders model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -105,14 +134,7 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost) {
-        $model->load($this->request->post());
-        $model->photo=UploadedFile::getInstance($model,'photo');
-        $file_name='/assets/img/'.\Yii::$app->getSecurity()->generateRandomString(50). '.' . $model->photo->extension;
-        $model->photo->saveAs(\Yii::$app->basePath . $file_name);
-        $model->photo=$file_name;
-
-            $model->save(false);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -122,7 +144,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Orders model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -136,15 +158,15 @@ class ProductController extends Controller
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Orders model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Product the loaded model
+     * @return Orders the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        if (($model = Orders::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

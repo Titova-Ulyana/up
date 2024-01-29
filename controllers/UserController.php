@@ -34,6 +34,13 @@ class UserController extends Controller
         );
     }
 
+
+    /*public function beforeAction($action)
+    { 
+        //отключение проверки токена csrf
+        if ($action->id=='checkpass') $this->enableCsrfValidation=false;
+        return parent::beforeAction($action);
+    }*/
     /**
      * Lists all User models.
      *
@@ -68,6 +75,7 @@ class UserController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+
     public function actionCreate()
     {
         $model = new RegForm();

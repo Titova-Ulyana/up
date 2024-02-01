@@ -20,6 +20,7 @@ $this->title = 'Каталог товаров';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<!-- Фильтры -->
 <div class="dropdown">
     <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle">Фильтр<b class="caret"></b></a>
     <?php
@@ -72,17 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<!--<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <div class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="rgu">
-      <button class="btn btn-outline-success" type="submit" onclick="ser()">Search</button>
-</div>
-  </div>
-</nav>-->
-
-
-
+<!-- Вывод карточек -->
 
 <?
 $dataProvider->sort->defaultOrder=['timestamp' => SORT_DESC];
@@ -95,7 +86,8 @@ foreach ($products as $product){
  <a href='/product/view?id={$product->id}'><img src='{$product->photo}' class='card-img-top' style='max-height: 300px;' alt='image'></a>
  <div class='card-body'>
  <h5 class='card-title'>{$product->name_product}</h5>
- <p class='card-text'>{$product->price} руб</p>";
+ <p class='card-text'>{$product->price} руб</p>
+ <p class='card-text'>Осталось: {$product->count} шт.</p>";
 
  echo (Yii::$app->user->isGuest ? "<a href='/product/view?id={$product->id}' class='btn btn-primary'>Просмотр товара</a>":"<p onclick='add_product({$product->id})' class='btn btn-primary'>Добавить в корзину</p>");
  echo "</div>
@@ -106,13 +98,3 @@ echo "</div>";
 ?>
 <script src=../js/script.js></script>
 
-
-
-
-<!--<script>
-function ser(){
-    let f = document.getElementById('rgu');
-
-    window.location.href = "https://up-titova.xn--80ahdri7a.site/product/catalog?ProductSearch[name_product]=" + f.value;
-}
-</script> -->

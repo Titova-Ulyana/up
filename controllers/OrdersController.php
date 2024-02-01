@@ -157,6 +157,14 @@ class OrdersController extends Controller
         return $this->redirect(['index']);
     }
 
+
+    public function actionDel()
+    {
+        $id=Yii::$app->request->post('id');
+        Orders::findOne($id)->delete();
+
+    }
+
     /**
      * Finds the Orders model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

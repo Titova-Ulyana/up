@@ -46,7 +46,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             Yii::$app->user->identity->is_admin==1 ?
             (
                 $items=[
-                ['label' => 'Панель администратора', 'url' => ['/admin/index']],
+                ['label' => 'Панель администратора', 'url' => ['/admin']],
                 ]
             ) :
             (
@@ -71,9 +71,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             }
 
         NavBar::begin([
-        'brandLabel' => Html::img('../../assets/img/rose1_white.jpg',['alt'=>Yii::$app->name, 'width' => '40px', 'height' => '40px']),
+        'brandLabel' => Html::img('../../assets/img/logo.png',['alt'=>Yii::$app->name, 'height' => '40px']),
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top "height="40px" width="40px"']
+        'options' => ['class' => 'navbar-expand-md navbar-dark fon-foot-head fixed-top']
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
@@ -88,12 +88,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?= $content ?>
     </div>
 </main>
-
-<footer id="footer" class="mt-auto py-3 bg-light">
+<br><br>
+<footer id="footer" class="mt-auto py-3 fon-foot-head fixed-bottom">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+            <div class="col-md-6 text-center text-md-start text-light">&copy; Мир цветов <?= date('Y') ?></div>
+
         </div>
     </div>
 

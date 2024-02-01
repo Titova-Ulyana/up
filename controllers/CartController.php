@@ -79,21 +79,17 @@ class CartController extends Controller
             {
                 $cart->count -= 1;
                 $cart->save(false);
-
-                $product=Product::findOne($id);
-                if($product !== null){
+            }else if ($cart->count == 1)
+                {
+                    $cart->delete();
+                }  else return 'false';  
+            $product=Product::findOne($id);
+            if($product !== null){
                 $product->count += 1;
                 $product->save(false);
                     return 'true';
-                }
-            } else if ($cart->count == 1)
-            {
-                error_log('111');
-                $cart->delete();
-
             }
-            else
-            return 'false';
+            else return 'false';
      }
 
 

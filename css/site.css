@@ -92,4 +92,22 @@ a.desc:after {
     background-color: #ccb4e2!important;
 }
 
+.fon-foot-head
+{
+    background-color: #ba71ff!important;
+}
 
+@font-face {
+    font-family: 'Pacifico-Regular';
+    src: url('../assets/fonts/Pacifico-Regular.ttf') format('truetype');
+  }
+
+  .font_pr
+  {
+    font-family: 'Pacifico-Regular';
+  }
+
+
+  .modal-backdrop {
+    display: none;    
+  }

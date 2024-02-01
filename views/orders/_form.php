@@ -26,7 +26,7 @@ $li[$stat->id]=$stat->name;
     <?= $form->field($model, 'status_order')->dropDownList($li) ?>
 
     <?//= $form->field($model, 'timestamp')->textInput() ?>
-
+    
     <?= $form->field($model, 'comment')->textArea(['maxlength' => true]) ?>
 
     <div class="form-group">

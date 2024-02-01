@@ -29,6 +29,7 @@ $this->title = $model->name_product;
     </p>
 
 
+<!-- карточка товара -->
 
 
 <div class="card mb-3" style="max-width: 1000px;">

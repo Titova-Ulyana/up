@@ -39,13 +39,13 @@ class RegForm extends \app\models\User
             [['name', 'surname', 'email', 'login', 'password', 'confirm_password', 'agree'], 'required'],
             [['name', 'surname', 'patronymic', 'email', 'login'], 'string', 'max' => 100],
             [['password', 'confirm_password'], 'string', 'max' => 200],
-            [['name', 'surname', 'patronymic'], 'match', 'pattern'=> '/^[А-Яа-яЁё-]{2,}$/u', 'message' => 'Используйте минимум 2 русские буквы'],
+            [['name', 'surname', 'patronymic'], 'match', 'pattern'=> '/^[А-Яа-яЁё\s\-]{2,}$/u', 'message' => 'Используйте минимум 2 русские буквы, можно использовать пробели и тире'],
             [['email'], 'unique'],
             [['email'], 'email'],
             [['login'], 'unique'],
-            [['password'], 'match', 'pattern'=>'/^[A-Za-z0-9]{6,}$/', 'message'=>'Используйте минимум 6 латинских букв и цифр'],
+            [['password'], 'match', 'pattern'=>'/^[A-Za-z0-9\-\_]{6,}$/', 'message'=>'Используйте минимум 6 латинских букв и цифр, можно использовать тире'],
             [['confirm_password'], 'compare', 'compareAttribute'=>'password'],
-            [['login'], 'match', 'pattern'=>'/^[A-Za-z0-9_]{6,}$/', 'message'=>'Используйте минимум 6 латинских букв и цифр'],
+            [['login'], 'match', 'pattern'=>'/^[A-Za-z0-9\-]{6,}$/', 'message'=>'Используйте минимум 6 латинских букв и цифр'],
             [['agree'], 'compare', 'compareValue'=>true, 'message'=>''],
 
         ];

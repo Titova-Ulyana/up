@@ -39,15 +39,17 @@ foreach($dataProvider->getModels() as $order)
     .'</div>
     <div class="card-body">
       <h5 class="card-title">'.$status['name'].'</h5>';
-      $price = 0;
+      echo $order["comment"] != null ? '<p class = "card-text">Комментарий к заказу: '.$order["comment"].'</p>' : '';
+
       foreach($carts as $cart){
         $product = Product::findOne(['id' => $cart['product_id']]);
-        $price = $product->price;
-        echo '<div class ="card-body m-3"><h5 class = "card-title">'.$product->name_product.' ('.$product->color.')</h5><p class = "card-text">Количество: '.$cart["count"].' шт.</p><p class = "card-text">Цена: '.$price.' руб.</p></div>';
+        echo '<div class ="card-body m-3">
+        <h5 class = "card-title">'.$product->name_product.' ('.$product->color.')</h5>
+        <p class = "card-text">Количество: '.$cart["count"].' шт.</p></div>';
 
       }
       echo '<p class = "card-text">Дата оформления: '.$order["timestamp"].'</p>';
-      echo  $order['status_order'] == 1 ? '<div onclick="del_ord()" class = "mt-2"><button class = "btn btn-danger">Удалить</button></div>' : '';
+      echo  $order['status_order'] == 1 ? '<div onclick="del_ord('.$order["id"].')" class = "mt-2"><button class = "btn btn-danger">Удалить</button></div>' : '';
     echo '</div>
   </div> <br>';
     }
@@ -60,6 +62,10 @@ foreach($dataProvider->getModels() as $order)
 
 
 ?>
+
+<script src=../js/script.js></script>
+
+
 
 
 </div>
